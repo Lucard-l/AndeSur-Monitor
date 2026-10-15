@@ -1,0 +1,36 @@
+APROBADO: Intento 1: PHP rechaza y registra
+APROBADO: Intento 2: PHP rechaza y registra
+APROBADO: Intento 3: PHP rechaza y registra
+APROBADO: Intento 4: PHP rechaza y registra
+APROBADO: Cuatro intentos no generan alerta
+APROBADO: Quinto intento: una alerta alta vinculada a cinco eventos
+APROBADO: Reenvío del mismo UUID no duplica evento
+APROBADO: Reenvío y sexto intento no repiten los mismos cinco fallos
+APROBADO: Contraseña válida verificada con el hash de MySQL
+APROBADO: Solicitud sin CSRF válido rechazada
+APROBADO: UUID inválido rechazado
+APROBADO: Se conservan exactamente seis fallos individuales
+APROBADO: Los registros de la API no contienen las contraseñas introducidas
+APROBADO: Dashboard accesible después de recargar
+APROBADO: La alerta persiste tras recargar
+APROBADO: Tres fuentes iniciales consultadas desde MySQL
+APROBADO: API de ingesta guarda un evento de laboratorio en MySQL
+APROBADO: Evento ingresado visible en consulta del dashboard
+APROBADO: PHP rechaza la operación aunque el cliente intente atribuirse un rol
+APROBADO: Acceso denegado genera alerta alta
+APROBADO: Repetir el acceso no duplica la alerta durante cinco minutos
+APROBADO: Heartbeat recibido
+APROBADO: Reenvío de heartbeat no renueva la hora
+APROBADO: No hay caída inmediata al detener las señales
+Esperando 16 segundos sin heartbeats para comprobar el reloj real del servidor…
+APROBADO: PHP detecta la inactividad después de más de 15 segundos
+APROBADO: Alerta crítica de inventarios guardada
+APROBADO: Verificar una caída persistente no duplica alertas
+APROBADO: Reenviar una señal antigua no simula una recuperación
+APROBADO: Una señal nueva recupera la fuente
+APROBADO: Evento de recuperación persistente
+APROBADO: La recuperación resuelve automáticamente la alerta de esa caída
+APROBADO: Heartbeat sin protección de sesión rechazado
+APROBADO: Verificar inactividad requiere POST protegido
+APROBADO: Fuente inexistente rechazada
+Sprint 1: pruebas HTTP completas aprobadas.

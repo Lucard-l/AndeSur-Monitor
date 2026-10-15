@@ -1,0 +1,36 @@
+:root { --azul: #163956; --fondo: #f3f5f7; }
+body { background: var(--fondo); color: #273341; font-size: .94rem; }
+.aplicacion { display: flex; min-height: 100vh; }
+.sidebar { width: 230px; flex-shrink: 0; background: var(--azul); color: white; padding: 28px 16px; position: relative; }
+.marca { color: white; text-decoration: none; font-size: 1.28rem; display: block; padding: 0 10px; }
+.marca-detalle { font-size: .8rem; color: #c2ced8; margin: 7px 10px; }
+.sidebar .nav-link { color: #e4ebf1; font-size: .9rem; padding: 12px 10px; border-radius: 3px; margin-bottom: 4px; }
+.sidebar .nav-link:hover, .sidebar .activo { background: #294f6d; color: white; }
+.sidebar-nota { margin: 48px 10px 0; color: #c2ced8; font-size: .8rem; line-height: 1.7; }
+.contenido { min-width: 0; flex: 1; }
+.encabezado { background: white; border-bottom: 1px solid #dfe4e9; padding: 20px 26px; display: flex; justify-content: space-between; gap: 12px; align-items: center; }
+h1 { font-size: 1.4rem; margin: 4px 0 0; font-weight: 600; }
+h2 { font-size: 1rem; font-weight: 600; margin: 0; }
+.aviso-laboratorio { color: #5e6c79; border-left: 3px solid #8c9eac; padding: 7px 12px; margin-bottom: 22px; font-size: .73rem; letter-spacing: .05em; }
+.card { border: 1px solid #dce2e7; border-radius: 4px; box-shadow: none; }
+.card-header { background: white; border-bottom: 1px solid #e4e8ec; padding: 16px 18px; }
+.card-header .small { display: block; margin-top: 5px; }
+.indicador .numero { font-size: 2rem; font-weight: 600; color: var(--azul); margin-top: 8px; }
+.grafico { height: 280px; padding-bottom: 40px; }
+.table { font-size: .82rem; }
+.table th { background: #f7f9fa; color: #5d6a76; font-weight: 600; white-space: nowrap; padding: 12px 16px; }
+.table td { padding: 12px 16px; }
+.btn-primary { --bs-btn-bg: #204e72; --bs-btn-border-color: #204e72; --bs-btn-hover-bg: #163956; --bs-btn-hover-border-color: #163956; border-radius: 4px; }
+.btn, .form-control, .alert { border-radius: 4px; }
+.fuente { padding: 12px 0; border-bottom: 1px solid #edf0f2; }
+.fuente:last-child { border-bottom: 0; }
+.fuente small { display: block; color: #64717d; margin-top: 4px; }
+footer { color: #74808c; font-size: .75rem; padding: 22px 26px; }
+[hidden] { display: none !important; }
+@media (max-width: 767px) {
+    .aplicacion { display: block; }
+    .sidebar { width: 100%; padding: 16px; }
+    .sidebar .nav { flex-direction: row !important; margin-top: 12px !important; gap: 8px; }
+    .sidebar-nota, .marca-detalle { display: none; }
+    .encabezado { padding: 16px; flex-wrap: wrap; }
+}

@@ -1,0 +1,18 @@
+{
+  "bootstrap": {
+    "version": "5.3.3",
+    "integrity": "sha512-8HLCdWgyoMguSO9o+aH+iuZ+aht+mzW0u3HIMzVu7Srrpv7EBBxTnrFlSCskwdY1+EOFQSm7uMJhNQHkdPcmjg==",
+    "archivos_sha256": {
+      "bootstrap.min.css": "3c8f27e6009ccfd710a905e6dcf12d0ee3c6f2ac7da05b0572d3e0d12e736fc8",
+      "LICENSE.bootstrap": "8c14611ae41ac6fd543c13349f22188eb12c69b3e59105c5eca3925a8e4eca3e"
+    }
+  },
+  "chart.js": {
+    "version": "4.4.9",
+    "integrity": "sha512-EyZ9wWKgpAU0fLJ43YAEIF8sr5F2W3LqbS40ZJyHIner2lY14ufqv2VMp69MAiZ2rpwxEUxEhIH/0U3xyRynxg==",
+    "archivos_sha256": {
+      "chart.umd.js": "de315773454b6076b63990bfa05ce5155a37f71992c87d7bb5f9a2ea698697ef",
+      "LICENSE.chartjs": "41a84aa2caba645f966a18d9c2056b73e6d3a81d80bc0046bc0011a2634d4cce"
+    }
+  }
+}

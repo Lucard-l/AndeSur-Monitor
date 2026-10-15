@@ -1,0 +1,7 @@
+/config/config.local.php
+/.runtime/
+/tests/resultados/
+*.log
+.DS_Store
+Thumbs.db
+__pycache__/

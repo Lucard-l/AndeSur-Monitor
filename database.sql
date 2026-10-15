@@ -70,7 +70,7 @@ INSERT INTO fuentes (codigo, nombre, tipo, ubicacion)
 SELECT 'INV-SCZ', 'Centro logístico — Inventarios', 'Inventarios', 'Santa Cruz'
 WHERE NOT EXISTS (SELECT 1 FROM fuentes WHERE codigo = 'INV-SCZ');
 
--- Cuenta exclusivamente académica: la contraseña se explica en el README.
+-- Usuario inicial con rol lector.
 INSERT INTO usuarios (nombre, contrasena_hash, rol)
 SELECT 'empleado', '$2y$12$En3FCaOH4cjiUF.LJTbBdu7ZGo7NRYQJvwbxa4xC.IQD6dzYAhZD6', 'lector'
 WHERE NOT EXISTS (SELECT 1 FROM usuarios WHERE nombre = 'empleado');

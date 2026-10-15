@@ -1,6 +1,6 @@
-# AndeSur Monitor — Sprint 1
+# AndeSur Monitor
 
-Prototipo académico del **Caso 9: monitoreo centralizado y gestión de registros del Grupo Empresarial AndeSur S.A.** Centraliza eventos sintéticos, los conserva en MySQL y genera alertas desde PHP. AndeSur Lab representa tres sistemas; AndeSur Monitor consulta la misma base mediante HTTP/JSON cada cinco segundos.
+Sistema de monitoreo de eventos y alertas. Almacena los registros en MySQL, aplica reglas de detección y actualiza el panel cada cinco segundos. AndeSur Lab permite generar actividad desde el portal de empleados, el sistema administrativo y el sistema de inventarios.
 
 Tecnologías: PHP 8.1 o superior sin frameworks, PDO MySQL, MySQL 8, HTML5, CSS3, Bootstrap 5.3.3, JavaScript vanilla y Chart.js 4.4.9. También se utiliza sintaxis SQL compatible con MariaDB de XAMPP. No requiere Node.js, Composer, Docker ni conexión a Internet para utilizar las pantallas.
 
@@ -9,12 +9,12 @@ Tecnologías: PHP 8.1 o superior sin frameworks, PDO MySQL, MySQL 8, HTML5, CSS3
 1. Instalar XAMPP con PHP 8.1 o superior. Este mínimo permite ejecutar la validación JSON utilizada; no usar PHP 7.
 2. Clonar este repositorio en `C:\xampp\htdocs\andesur-monitor`. Conservar la carpeta `public` y las demás carpetas en su posición.
 3. Iniciar **Apache** y **MySQL** desde el panel de XAMPP. Su componente MySQL suele ser MariaDB; la validación en la nube se realizó con MySQL 8 real.
-4. Abrir phpMyAdmin localmente. En **Importar**, elegir `database.sql`. Se crea `andesur_monitor`, cuatro tablas, tres fuentes y una cuenta de demostración; no se insertan eventos ni alertas prefabricados. El archivo puede reimportarse sin borrar datos ni reemplazar contraseñas existentes.
+4. Abrir phpMyAdmin localmente. En **Importar**, elegir `database.sql`. Se crea `andesur_monitor`, cuatro tablas, tres fuentes y un usuario inicial. El archivo puede reimportarse sin borrar datos ni reemplazar contraseñas existentes.
 5. Copiar `config/config.example.php` como `config/config.local.php`. Revisar host, puerto, base, usuario y contraseña. Los valores del ejemplo corresponden al XAMPP local habitual; ajustar si se configuró una contraseña o un puerto diferente. El archivo local está ignorado por Git.
 6. Abrir en el navegador de esa misma computadora:
    - AndeSur Lab: ruta local `/andesur-monitor/public/lab.php`.
    - AndeSur Monitor: ruta local `/andesur-monitor/public/dashboard.php`.
-7. Mantener abiertas ambas ventanas para la demostración. No abrir los archivos como `file://` ni mediante Live Server: PHP debe ejecutarse en Apache.
+7. Mantener abiertas ambas ventanas para observar los eventos. No abrir los archivos como `file://` ni mediante Live Server: PHP debe ejecutarse en Apache.
 
 Las direcciones anteriores son rutas para introducir en el navegador local; este proyecto no publica un servicio web. Apache debe permitir los archivos `.htaccess` (`AllowOverride All`, valor habitual de XAMPP). El directorio raíz queda protegido y solo `public` admite conexiones locales. Si aparece un 403 en `public`, revisar esta configuración de Apache y usar `localhost` o `127.0.0.1` desde la misma PC.
 
@@ -26,17 +26,17 @@ php -S 127.0.0.1:8080 -t public
 
 Se debe servir **solo `public`** con el servidor de desarrollo. El backend rechaza conexiones externas y nombres de servidor diferentes de localhost. No se habilitan CORS ni acceso desde la red.
 
-## Cuenta y demostración
+## Uso
 
-La cuenta sintética es `empleado`, contraseña de demostración `AndeSur2026!`, rol `lector`. Se guarda únicamente su hash bcrypt en MySQL. No utilizar esta cuenta fuera del laboratorio ni reutilizar esa contraseña para cuentas reales. La autenticación representada pertenece al portal de empleados; no es un módulo de administración de usuarios del monitor.
+El usuario inicial es `empleado`, su contraseña es `AndeSur2026!` y tiene el rol `lector`. La contraseña se guarda como hash en MySQL. El formulario de acceso corresponde al portal de empleados.
 
 1. En Lab, introducir `empleado` y una contraseña incorrecta **cinco veces**. PHP registra cada `LOGIN_FAILED`; el quinto genera **Posible ataque de fuerza bruta**, severidad alta, origen Portal de empleados / La Paz. Verificar el aviso y el dashboard. Una contraseña correcta genera `LOGIN_SUCCESS` y no dispara esa regla.
-2. Pulsar **Consultar información administrativa restringida**. PHP consulta el rol de la cuenta fija de prueba en MySQL y devuelve HTTP 403 sin ejecutar la consulta restringida. Guarda `ACCESS_DENIED` y una alerta alta desde el Sistema administrativo / Cochabamba. Enviar un supuesto rol de administrador desde JavaScript no concede permiso.
+2. Pulsar **Consultar información administrativa restringida**. PHP consulta el rol del usuario `empleado` en MySQL y devuelve HTTP 403 sin ejecutar la consulta restringida. Guarda `ACCESS_DENIED` y una alerta alta desde el Sistema administrativo / Cochabamba. Enviar un supuesto rol de administrador desde JavaScript no concede permiso.
 3. Inventarios envía un heartbeat cada cuatro segundos. Comprobar el estado activo y la última señal. Pulsar **Detener servicio**, conservar abierto el monitor y esperar aproximadamente **15–20 segundos**. El botón no envía una caída: el monitor solicita la verificación cada cinco segundos y PHP detecta más de 15 segundos sin actividad. Se guarda `SERVICE_DOWN`, una alerta crítica y el estado inactivo.
 4. Pulsar **Reanudar servicio**. Una señal nueva registra `SERVICE_RECOVERED`, devuelve la fuente a activa y resuelve automáticamente la alerta de esa caída. Los eventos y la alerta se conservan. Volver a detener y reanudar permite demostrar un incidente nuevo.
 5. Recargar ambas páginas: los datos persisten en MySQL. Lab recuerda la emisión detenida en `localStorage`; reanudarla expresamente cuando sea necesario.
 
-Usar una sola ventana de Lab para una demostración clara. Varias ventanas del mismo navegador comparten la orden de detener/reanudar; una ventana de otro navegador puede seguir enviando señales. Cerrar Lab también detiene sus heartbeats. Si el navegador suspende la pestaña o la computadora, puede producirse una alerta de disponibilidad; el prototipo observa el emisor del navegador, no un servicio corporativo real.
+Usar una sola ventana de Lab para controlar las señales. Varias ventanas del mismo navegador comparten la orden de detener/reanudar; una ventana de otro navegador puede seguir enviando señales. Cerrar Lab también detiene sus heartbeats. Si el navegador suspende la pestaña o la computadora, puede producirse una alerta de disponibilidad; la última actividad corresponde al emisor del navegador.
 
 ## Motor y duplicados
 
@@ -47,7 +47,7 @@ Las funciones de `includes/eventos.php` se ejecutan dentro de transacciones. Se 
 - **Servicio inactivo:** solo se vigila inventarios tras su primer heartbeat. Una transición activa → inactiva genera un incidente. La fuente permanece inactiva hasta una señal nueva; consultar repetidamente no crea más alertas. La recuperación resuelve únicamente ese incidente.
 - Cada operación recibe un UUID v4. Su índice único evita insertar nuevamente el mismo evento. Un reenvío de heartbeat antiguo no actualiza su hora ni recupera la fuente. El servidor rechaza reutilizar un UUID con otro contenido.
 
-Las fechas de almacenamiento y la sesión SQL usan UTC; JavaScript presenta hora de `America/La_Paz` (UTC−4). No se implementa sincronización NTP ni detección de desfase en este sprint.
+Las fechas de almacenamiento y la sesión SQL usan UTC; JavaScript presenta hora de `America/La_Paz` (UTC−4).
 
 ## Archivos y módulos
 
@@ -65,7 +65,7 @@ public/assets/js/           Fetch, actualizaciones y emisor de heartbeats
 public/assets/vendor/       Bootstrap y Chart.js locales, versiones y licencias
 ```
 
-Las cuatro tablas son `fuentes`, `usuarios`, `eventos`, `alertas`. No se añaden tablas de reportes, auditoría ni gestión avanzada. Los eventos tienen índices por fecha, fuente, código y usuario; las alertas tienen una clave de correlación única y referencias a los eventos desencadenantes.
+Las cuatro tablas son `fuentes`, `usuarios`, `eventos`, `alertas`. Los eventos tienen índices por fecha, fuente, código y usuario; las alertas tienen una clave de correlación única y referencias a los eventos desencadenantes.
 
 ## API y seguridad básica
 
@@ -111,10 +111,8 @@ WHERE a.id = 1 AND a.tipo = 'BRUTE_FORCE'
 ORDER BY e.id;
 ```
 
-## Alcance y limitaciones
+## Funcionamiento local
 
-Se implementa exclusivamente el Sprint 1 del texto de requisitos suministrado. El PDF oficial fundamenta la centralización (A.8.15), el monitoreo (A.8.16), la consistencia temporal (A.8.17) y la necesidad futura de dimensionamiento (A.8.6). Almacenar en UTC no acredita sincronización de relojes ni conformidad ISO.
+La aplicación admite conexiones desde `localhost` o `127.0.0.1`. Lab genera eventos simulados y no se conecta a sistemas externos. La comprobación de inactividad depende del monitor abierto y no se ejecuta como un servicio independiente.
 
-Quedan para sprints posteriores: gestión de fuentes/alertas, filtros, roles de operadores del monitor, reportes, auditoría administrativa, verificación de desfases, capacidad, retención y endurecimiento empresarial. El timeout de 15 segundos y las tres fuentes corresponden al alcance solicitado; el documento académico describe además umbrales y escenarios para el piloto completo.
-
-El detector de inactividad se ejecuta al consultar el monitor; sin este abierto se necesita invocar `verificar` manualmente con una sesión autorizada. No hay worker ni servicio de monitoreo independiente. Los umbrales son de demostración y no valores establecidos por ISO. XAMPP en Windows y phpMyAdmin requieren comprobación local por el equipo; la validación automatizada se realizó en Linux con PHP y MySQL reales.
+Las instrucciones anteriores permiten instalar el sistema en XAMPP. La validación realizada hasta el momento corresponde a PHP y MySQL en Linux.

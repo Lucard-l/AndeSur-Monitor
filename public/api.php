@@ -64,7 +64,7 @@ try {
         case 'verificar':
             responder(verificar_inactividad($bd));
         case 'evento':
-            $resultado = registrar_evento_laboratorio($bd, texto($datos, 'fuente', 30), texto($datos, 'descripcion', 255), $datos['uuid']);
+            $resultado = registrar_evento($bd, texto($datos, 'fuente', 30), texto($datos, 'descripcion', 255), $datos['uuid']);
             responder($resultado, $resultado['evento']['duplicado'] ? 200 : 201);
         case 'login':
             $usuario = texto($datos, 'usuario', 80);

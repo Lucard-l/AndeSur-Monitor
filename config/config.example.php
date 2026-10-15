@@ -1,5 +1,5 @@
 <?php
-// Copiar a config.local.php. En XAMPP, revisar usuario, contraseña y puerto.
+// Copiar como config.local.php y ajustar la conexión.
 return [
     'host' => '127.0.0.1',
     'puerto' => 3306,

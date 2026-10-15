@@ -31,7 +31,7 @@ document.getElementById('intentar-acceso').addEventListener('click', async (even
     }
 });
 
-// El botón solo controla el emisor; la ausencia de señales la detecta PHP.
+// Detener el envío no cambia el estado de la fuente en el servidor.
 const claveServicio = 'andesur-inventarios-activo';
 let emitiendo = localStorage.getItem(claveServicio) !== 'no';
 let temporizador;

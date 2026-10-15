@@ -4,18 +4,18 @@ declare(strict_types=1);
 date_default_timezone_set('UTC');
 ini_set('display_errors', '0');
 
-// El prototipo se ejecuta en una sola computadora, sin acceso público.
+// Acceso limitado a la computadora local.
 if (PHP_SAPI !== 'cli' && !in_array($_SERVER['REMOTE_ADDR'] ?? '', ['127.0.0.1', '::1'], true)) {
     http_response_code(403);
     header('Content-Type: text/plain; charset=utf-8');
-    exit('El laboratorio solo admite conexiones desde esta computadora.');
+    exit('El servicio solo admite conexiones desde esta computadora.');
 }
 
 if (PHP_SAPI !== 'cli') {
     $servidor = parse_url('http://' . ($_SERVER['HTTP_HOST'] ?? ''), PHP_URL_HOST);
     if (!in_array($servidor, ['localhost', '127.0.0.1', '[::1]'], true)) {
         http_response_code(403);
-        exit('Utilice localhost para abrir el laboratorio.');
+        exit('Utilice localhost para acceder al servicio.');
     }
     header('X-Content-Type-Options: nosniff');
     header('X-Frame-Options: DENY');

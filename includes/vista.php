@@ -32,7 +32,6 @@ function cabecera(string $pagina, string $titulo): void
             <a class="nav-link <?= $pagina === 'dashboard' ? 'activo' : '' ?>" href="dashboard.php" <?= $pagina === 'dashboard' ? 'aria-current="page"' : '' ?>>Resumen de monitoreo</a>
             <a class="nav-link <?= $pagina === 'lab' ? 'activo' : '' ?>" href="lab.php" <?= $pagina === 'lab' ? 'aria-current="page"' : '' ?>>AndeSur Lab</a>
         </nav>
-        <p class="sidebar-nota">Sprint 1<br>Prototipo académico</p>
     </aside>
     <div class="contenido">
         <header class="encabezado">
@@ -40,7 +39,6 @@ function cabecera(string $pagina, string $titulo): void
             <span class="badge text-bg-light border">Hora de Bolivia · UTC−4</span>
         </header>
         <main class="container-fluid p-3 p-lg-4">
-            <div class="aviso-laboratorio">ENTORNO ACADÉMICO — DATOS SIMULADOS</div>
     <?php
 }
 
@@ -48,7 +46,7 @@ function pie(): void
 {
     ?>
         </main>
-        <footer>AndeSur Monitor · Laboratorio local · Sprint 1</footer>
+        <footer>AndeSur Monitor</footer>
     </div>
 </div>
 </body>

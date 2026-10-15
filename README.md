@@ -63,9 +63,6 @@ public/dashboard.php        Indicadores, fuentes, tablas y gráfico
 public/assets/css/app.css   Estilo administrativo sencillo
 public/assets/js/           Fetch, actualizaciones y emisor de heartbeats
 public/assets/vendor/       Bootstrap y Chart.js locales, versiones y licencias
-scripts/descargar_recursos.py  Descarga opcional verificada de recursos
-tests/                      Pruebas HTTP y opcionalmente de navegador
-docs/                       Backlog, criterios y resultados reales
 ```
 
 Las cuatro tablas son `fuentes`, `usuarios`, `eventos`, `alertas`. No se añaden tablas de reportes, auditoría ni gestión avanzada. Los eventos tienen índices por fecha, fuente, código y usuario; las alertas tienen una clave de correlación única y referencias a los eventos desencadenantes.
@@ -113,26 +110,6 @@ WHERE a.id = 1 AND a.tipo = 'BRUTE_FORCE'
   AND e.id BETWEEN a.primer_evento_id AND a.ultimo_evento_id
 ORDER BY e.id;
 ```
-
-## Pruebas
-
-Con la aplicación y MySQL iniciados, desde la raíz del repositorio (sustituir `URL_BASE_LOCAL` por la dirección local que contiene `lab.php`):
-
-```bash
-python tests/probar_flujo.py URL_BASE_LOCAL
-```
-
-Es una prueba HTTP con Python 3 y su biblioteca estándar; requiere unos 16 segundos sin heartbeats. **Cerrar las ventanas de Lab antes de ejecutarla**, para que no sigan enviando señales. Agrega datos sintéticos y no borra registros. Cada ejecución usa un usuario de prueba diferente. Para comprobar solo el primer flujo, agregar `--solo-login`.
-
-La prueba opcional de interfaz utiliza Playwright y Chromium, que no son dependencias de ejecución del proyecto:
-
-```bash
-python tests/probar_interfaz.py URL_BASE_LOCAL --chromium RUTA_CHROMIUM
-```
-
-Comprueba los formularios, dos ventanas, actualización automática, caída y recuperación, recarga, gráfico y adaptación a móvil; guarda capturas reales en `tests/resultados/`, excluidas de Git. [Resultados de la validación](docs/pruebas.md) y [Sprint Backlog propuesto](docs/sprint-1.md).
-
-Los recursos frontend ya están versionados. Para descargarlos nuevamente se puede ejecutar `python scripts/descargar_recursos.py`; requiere acceso a `registry.npmjs.org`, verifica la integridad SHA-512 del paquete y registra hashes de sus archivos. No es necesario ejecutarlo al instalar en XAMPP.
 
 ## Alcance y limitaciones
 

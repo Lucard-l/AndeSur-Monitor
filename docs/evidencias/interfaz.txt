@@ -1,7 +1,0 @@
-APROBADO: cinco formularios fallidos actualizan la alerta en otra ventana sin recargar.
-APROBADO: operación restringida rechazada desde la interfaz.
-APROBADO: detener señales produce una caída detectada por el monitor después del umbral.
-APROBADO: recuperación persistida y visible automáticamente.
-APROBADO: eventos y alerta persisten al recargar.
-APROBADO: gráfico real, sin errores JavaScript y vistas adaptadas a 390 px.
-Prueba de interfaz completa aprobada. Capturas en tests/resultados/.
